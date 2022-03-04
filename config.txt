@@ -1,0 +1,6 @@
+Work Time (in minutes)          : 1
+Short Break Time (in minutes)   : 1
+Long Break Time (in minutes)    : 1
+Number of Sessions              : 2
+Auto-Start Break Sessions       : 0     # 1 = yes, 0 = no
+Auto-Start Work Sessions        : 1     # 1 = yes, 0 = no
