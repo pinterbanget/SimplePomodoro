@@ -18,12 +18,10 @@ class TrayInstance:
         self.icon_image = Image.open(get_path('icon.png'))
         self.menu = (MenuItem(lambda text: 'Start Session' if not self.status else 'Continue Session',
                               self.toggle_timer),
-                     MenuItem(lambda text: 'Stop Session' if self.status else 'Reset Session', self.stop_timer),
+                     MenuItem(lambda text: 'Stop Session' if self.thread else 'Reset Session', self.stop_timer),
                      MenuItem('Exit', self.exit_program))
         self.icon = Icon('Simple Pomodoro', self.icon_image, 'Simple Pomodoro\nby pinterbanget', self.menu)
         self.icon.run()
-
-        self.icon.notify('Simple Pomodoro has been started.', 'Simple Pomodoro Started')
 
     def toggle_timer(self):
         self.status = True
@@ -60,13 +58,16 @@ class TrayInstance:
         self.icon.update_menu()
 
     def stop_timer(self):
-        if self.status:
+        if self.thread:
             self.status = False
             self.icon.notify('Pomodoro session has been stopped.', 'Pomodoro Session Stopped')
             self.icon.title = 'Simple Pomodoro\nSession stopped'
+            if self.cycle_count % 2:
+                self.pomodoro_count -= 1
             self.cycle_count -= 1
         else:
-            self.pomodoro_count = 1
+            self.pomodoro_count = 0
+            self.cycle_count = 0
             self.icon.notify('Pomodoro session has been reset.', 'Pomodoro Session Reset')
             self.icon.title = 'Simple Pomodoro\nSession reset'
 
@@ -103,6 +104,7 @@ class TrayInstance:
                           f'{self.pomodoro_count}/{self.SESSIONS} completed\n' \
                           f'Next: {"break" if self.cycle_count % 2 else "work"} sess.'
         self.thread = None
+        self.icon.update_menu()
 
     def exit_program(self):
         self.icon.visible = False
