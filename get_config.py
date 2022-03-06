@@ -3,7 +3,7 @@ def get_config(file: str = 'config.txt') -> list:
     Fetches user configuration from the config.txt file.
     Returns a list of integers containing values needed for the Pomodoro timer.
     """
-    default_values = [25, 5, 20, 4, 0, 1]
+    default_values = [25, 5, 20, 4, 0, 0]
     time_config = []
     try:
         with open(file, encoding='utf8') as f:
