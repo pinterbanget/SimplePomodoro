@@ -71,7 +71,7 @@ class TrayInstance:
             self.icon.title = 'Simple Pomodoro\nSession reset'
 
     def pomodoro_timer(self, time_slot):
-        count = time_slot * 30
+        count = time_slot * 60
         while count > 0 and self.status:
             self.icon.title = f'Simple Pomodoro\n' \
                               f'{self.pomodoro_count}/{self.SESSIONS} completed\n' \
